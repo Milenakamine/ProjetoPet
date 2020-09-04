@@ -1,0 +1,73 @@
+--Cria o Banco de dados
+CREATE DATABASE PetShop;
+USE PetShop;
+
+--Cria a tabela de clinicas
+CREATE TABLE Clinica(
+	IdClinica INT PRIMARY KEY IDENTITY NOT NULL,
+	Nome VARCHAR(100) NOT NULL,
+	Endereco VARCHAR(100),
+);
+GO
+
+
+
+CREATE TABLE Veterinario(
+	IdVeterinario INT IDENTITY PRIMARY KEY NOT NULL,
+	Nome VARCHAR(100),
+	CRV VARCHAR(30),
+--FK
+	IdClinica INT FOREIGN KEY REFERENCES Clinica(IdClinica)
+);
+GO
+
+
+CREATE TABLE TipoPet(
+	IdTipoPet INT IDENTITY PRIMARY KEY NOT NULL,
+	Descricao VARCHAR(100),
+
+);
+GO
+
+
+
+CREATE TABLE Dono(
+	IdDono INT IDENTITY PRIMARY KEY NOT NULL,
+	Nome VARCHAR(100)	
+);
+GO
+
+
+CREATE TABLE Raca(
+	IdRaca INT IDENTITY PRIMARY KEY NOT NULL,
+	Descricao VARCHAR(100),
+
+--FK
+	IdTipoPet INT FOREIGN KEY REFERENCES TipoPet(IdTipoPet)
+);
+GO
+
+
+
+CREATE TABLE Pet(
+	IdPet INT IDENTITY PRIMARY KEY NOT NULL,
+	Nome VARCHAR(100),
+	DataNascimento Date,
+--FK
+	IdRaca INT FOREIGN KEY REFERENCES Raca(IdRaca),
+	IdDono INT FOREIGN KEY REFERENCES Dono(IdDono)
+);
+GO
+
+
+
+CREATE TABLE Atendimento(
+	IdAtendimento INT IDENTITY PRIMARY KEY NOT NULL,
+	Descricao VARCHAR(100),
+	DataAtendimento DateTime,
+--FK
+	IdPet INT FOREIGN KEY REFERENCES Pet(IdPet),
+	IdVeterinario INT FOREIGN KEY REFERENCES Veterinario(IdVeterinario),
+	
+);
+GO
